@@ -90,9 +90,11 @@ public class MainActivity extends AppCompatActivity {
                     if (pet1.getStrength() > pet2.getStrength()) {
                         result = pet1.getName() + " wins against " +
                                 pet2.getName() + "!!";
+                        dbHelper.logBattle(pet1.getName(), pet1.getStrength(), pet2.getName(), pet2.getStrength());
                     } else if (pet1.getStrength() < pet2.getStrength()) {
                         result = pet2.getName() + " wins against " +
                                 pet1.getName() + "!!";
+                        dbHelper.logBattle(pet2.getName(), pet2.getStrength(), pet1.getName(), pet1.getStrength());
                     } else {
                         result = "IT IS A TIE!! BATTLE AGAIN";
                     }
