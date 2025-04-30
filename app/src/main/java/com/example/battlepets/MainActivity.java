@@ -44,18 +44,26 @@ public class MainActivity extends AppCompatActivity {
         btnAddPet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String petAdded = "PET added!";
+                String noPetAdded = "No PET added!! Type in some stuff!";
                 String name = editName.getText().toString();
                 String type = editType.getText().toString();
 
                 if(!name.isEmpty() && !type.isEmpty()){
                     dbHelper.addPet(name, type);
-                    Toast.makeText(MainActivity.this, "PET ADDED!!",
-                            Toast.LENGTH_SHORT).show();
+                    new androidx.appcompat.app.AlertDialog.Builder(MainActivity.this).
+                            setTitle("Pet Addition!").
+                            setMessage(petAdded).
+                            setPositiveButton("Okay", null).
+                            show();
                     editName.setText("");
                     editType.setText("");
                 }else{
-                    Toast.makeText(MainActivity.this, "ENTER PET NAME AND TYPE!!",
-                            Toast.LENGTH_SHORT).show();
+                    new androidx.appcompat.app.AlertDialog.Builder(MainActivity.this).
+                            setTitle("Pet Addition").
+                            setMessage(noPetAdded).
+                            setPositiveButton("Okay", null).
+                            show();
                 }
 
             }
@@ -65,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         btnBattle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String result= ""; //blank string
                 List<Pet> pets = dbHelper.getAllPets();
 
                 if(pets.size() >= 2){
@@ -76,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
                         pet2 = pets.get(random.nextInt(pets.size()));
                     }
 
-                    String result;
                     if(pet1.getStrength() > pet2.getStrength()){
                         result = pet1.getName() + " wins against " +
                                 pet2.getName() + "!!";
@@ -89,11 +97,21 @@ public class MainActivity extends AppCompatActivity {
                         result = "IT IS A TIE!! BATTLE AGAIN";
                     }
 
-                    //Display Toasts
-                    Toast.makeText(MainActivity.this, result, Toast.LENGTH_LONG).show();
+                    //Display Battle Results
+                    new androidx.appcompat.app.AlertDialog.Builder(MainActivity.this).
+                            setTitle("Battle Results").
+                            setMessage(result).
+                            setPositiveButton("Okay", null).
+                            show();
+                    btnBattle.startAnimation(android.view.animation.AnimationUtils.
+                            loadAnimation(MainActivity.this, R.anim.shake));
                 }
                 else{
-                    Toast.makeText(MainActivity.this, "NOT ENOUGH BATTLE PETS!!", Toast.LENGTH_SHORT).show();
+                    new androidx.appcompat.app.AlertDialog.Builder(MainActivity.this).
+                            setTitle("Battle Results").
+                            setMessage(result).
+                            setPositiveButton("Okay", null).
+                            show();
                 }
             }
         });

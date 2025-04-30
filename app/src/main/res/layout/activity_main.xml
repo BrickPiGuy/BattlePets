@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/editName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="@+id/banner"
         app:layout_constraintTop_toBottomOf="@+id/banner" />
 
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/editType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,25 +29,26 @@
         app:layout_constraintStart_toStartOf="@+id/editName"
         app:layout_constraintTop_toBottomOf="@+id/editName" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnAddPet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
         android:layout_marginBottom="17dp"
         android:text="Add Battle Pet!!"
         app:layout_constraintBottom_toTopOf="@+id/btnBattle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnBattle"
         app:layout_constraintTop_toBottomOf="@+id/editType" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnBattle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="277dp"
         android:text="Start Battle Pets!!"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/btnAddPet"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnAddPet" />
 
     <TextView
@@ -55,7 +56,7 @@
         android:layout_width="208dp"
         android:layout_height="0dp"
         android:layout_marginTop="106dp"
-        android:layout_marginBottom="39dp"
+        android:layout_marginBottom="38dp"
         android:text="Battle Pets!!"
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/editName"
