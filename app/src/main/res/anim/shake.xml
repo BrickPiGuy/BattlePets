@@ -6,6 +6,6 @@
 
 <translate
     android:fromXDelta="0"
-    android:fromYDelta="0" />
+    android:fromYDelta="10" />
 
 </set>

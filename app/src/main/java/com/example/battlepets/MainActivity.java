@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 import java.util.Random;
@@ -18,7 +20,7 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
     private PetDatabaseHelper dbHelper;
     private EditText editName, editType;
-    private Button btnAddPet, btnBattle;
+    private Button btnAddPet, btnBattle, btnViewBattleHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 String name = editName.getText().toString();
                 String type = editType.getText().toString();
 
-                if(!name.isEmpty() && !type.isEmpty()){
+                if (!name.isEmpty() && !type.isEmpty()) {
                     dbHelper.addPet(name, type);
                     new androidx.appcompat.app.AlertDialog.Builder(MainActivity.this).
                             setTitle("Pet Addition!").
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                             show();
                     editName.setText("");
                     editType.setText("");
-                }else{
+                } else {
                     new androidx.appcompat.app.AlertDialog.Builder(MainActivity.this).
                             setTitle("Pet Addition").
                             setMessage(noPetAdded).
@@ -73,27 +75,25 @@ public class MainActivity extends AppCompatActivity {
         btnBattle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String result= ""; //blank string
+                String result = ""; //blank string
                 List<Pet> pets = dbHelper.getAllPets();
 
-                if(pets.size() >= 2){
+                if (pets.size() >= 2) {
                     Random random = new Random();
                     Pet pet1 = pets.get(random.nextInt(pets.size()));
                     Pet pet2 = pets.get(random.nextInt(pets.size()));
 
-                    while(pet1.getId() == pet2.getId()){
+                    while (pet1.getId() == pet2.getId()) {
                         pet2 = pets.get(random.nextInt(pets.size()));
                     }
 
-                    if(pet1.getStrength() > pet2.getStrength()){
+                    if (pet1.getStrength() > pet2.getStrength()) {
                         result = pet1.getName() + " wins against " +
                                 pet2.getName() + "!!";
-                    }
-                    else if(pet1.getStrength() < pet2.getStrength()){
+                    } else if (pet1.getStrength() < pet2.getStrength()) {
                         result = pet2.getName() + " wins against " +
                                 pet1.getName() + "!!";
-                    }
-                    else{
+                    } else {
                         result = "IT IS A TIE!! BATTLE AGAIN";
                     }
 
@@ -105,8 +105,7 @@ public class MainActivity extends AppCompatActivity {
                             show();
                     btnBattle.startAnimation(android.view.animation.AnimationUtils.
                             loadAnimation(MainActivity.this, R.anim.shake));
-                }
-                else{
+                } else {
                     new androidx.appcompat.app.AlertDialog.Builder(MainActivity.this).
                             setTitle("Battle Results").
                             setMessage(result).
@@ -115,5 +114,28 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //Botton for Battle Logs
+        btnViewBattleHistory = findViewById(R.id.btnViewBattleHistory);
+        btnViewBattleHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showBattleHistory();
+            }
+        });
+    }
+
+    public void showBattleHistory(){
+        List<BattleLog> history = dbHelper.getBattleHistory();
+
+        View dialogView= getLayoutInflater().inflate(R.layout.dialog_battle_history,null);
+        RecyclerView recyclerView = dialogView.findViewById(R.id.recyclerBattleLog);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new BattleLogAdapter(history));
+
+        new androidx.appcompat.app.AlertDialog.Builder(this).
+                setTitle("Battle History").
+                setView(dialogView).
+                setPositiveButton("Close",null).show();
     }
 }
