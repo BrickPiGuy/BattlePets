@@ -43,7 +43,7 @@ public class PetDatabaseHelper extends SQLiteOpenHelper {
                 "timestamp DATETIME DEFAULT CURRENT_TIMESTAMP);";
 
         sqLiteDatabase.execSQL(createTable);
-        //sqLiteDatabase.execSQL(createBattleLogTable);
+        sqLiteDatabase.execSQL(createBattleLogTable);
     }
 
     @Override

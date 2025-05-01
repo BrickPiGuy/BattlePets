@@ -7,6 +7,7 @@ public class Pet {
     private int strength;
 
     //Constructor
+    //Generates a pet will all of its attributes!!
     public Pet (int id, String name, String type ,int strength){
         this.id = id;
         this.name = name;
